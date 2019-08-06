@@ -13,8 +13,16 @@
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
-Route::get('/basededatos', function () {
+Route::get('basededatos', function () {
     return view('baseDeDatos');
+})->name('baseDeDatos');
+
+Route::prefix('admin')->group(function () {
+    Route::get('datosUpload', function(){
+        return view('datosUpload');
+    });
+
+
 });
