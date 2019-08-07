@@ -20,9 +20,10 @@ Route::get('basededatos', function () {
 })->name('baseDeDatos');
 
 Route::prefix('admin')->group(function () {
-    Route::get('datosUpload', function(){
+    Route::get('datosUpload', function() {
         return view('datosUpload');
     });
 
+    Route::post('import', 'importController@import')->name('datosPost');
 
 });
