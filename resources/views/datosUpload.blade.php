@@ -65,11 +65,11 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <form action={{ route('datosPost') }} method="POST">
+            <form action={{ route('datosPost') }} method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="file" name="import_file">
+                <input type="file" name="import_file" />
                 <br />
-                <input type="submit" value="upload">
+                <input type="submit" value="Import" />
 
             </form>
         </div>

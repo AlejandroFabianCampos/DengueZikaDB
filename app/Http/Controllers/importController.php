@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 
 class importController extends Controller
 {
-    public function import(Request $request) 
+    public function import() 
     {
-        Excel::import(new infoImport(), $request->file('import_file'));
+        Excel::import(new infoImport, request()->file('TablaDengueYZika.xlsx'), null, \Maatwebsite\Excel\Excel::XLSX);
         
         return redirect('/')->with('success', 'All good!');
     }
