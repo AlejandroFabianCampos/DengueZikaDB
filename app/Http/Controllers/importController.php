@@ -11,7 +11,7 @@ class importController extends Controller
 {
     public function import() 
     {
-        Excel::import(new InfoImport, request()->file('TablaDengueYZika.xlsx'), null, \Maatwebsite\Excel\Excel::XLSX);
+        Excel::import(new InfoImport, request()->file('TablaDengueYZika.xlsx'));
         
         return redirect('/')->with('success', 'All good!');
     }
