@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="/basededatos">Acceder a la información acerca de enfermedades</a>
+                    <a href="{{ route('baseDeDatos') }}">Acceder a la información acerca de enfermedades</a>
                 </div>
             </div>
         </div>

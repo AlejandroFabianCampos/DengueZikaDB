@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('basededatos', function () {
-    return view('baseDeDatos');
-})->name('baseDeDatos');
+Route::get('/basededatos', 'DBQueryController@home')->name('baseDeDatos');
+
+Route::get('/test', 'DBQueryController@test');
 
 Route::prefix('admin')->group(function () {
     Route::get('datosUpload', function() {

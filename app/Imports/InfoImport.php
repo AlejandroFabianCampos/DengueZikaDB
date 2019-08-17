@@ -3,6 +3,7 @@ namespace App\Imports;
 
 use App\event;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class InfoImport implements ToModel
 {
@@ -19,7 +20,8 @@ class InfoImport implements ToModel
             'epidemical_week' => $row[2],
             'disease' => $row[3],
             'age_group' => $row[4],
-            'case_quantity' => $row[5]
+            'case_quantity' => $row[5],
         ]);
     }
+
 }
