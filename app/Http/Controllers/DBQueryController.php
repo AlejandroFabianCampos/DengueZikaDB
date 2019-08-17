@@ -22,15 +22,15 @@ class DBQueryController extends Controller
         $santiagoDelEstero = $request->input('SantiagoDelEstero');
         $tucuman = $request->input('Tucuman');
         $enfermedad = $request->input('enfermedad');
-        $enfermedadReq = $request->input('enfermedad');
-        
 
         function globalQueryWithoutUnion($province, $enfLocal) {
             return DB::table('events')
                 ->where('province_name', $province)
-                ->when($enfLocal != "Ambos", function ($query, $enfLocal) {
-                    echo "this ran" . $enfLocal;
-                    return $query->where('disease', $enfLocal);
+                ->when($enfLocal == "Dengue", function ($query) {
+                    return $query->where('disease', 'Dengue');
+                })
+                ->when($enfLocal == "Enfermedad por Virus del Zika", function ($query) {
+                    return $query->where('disease', 'Enfermedad por Virus del Zika');
                 });
                 
         }
@@ -41,7 +41,7 @@ class DBQueryController extends Controller
                 return $newQuery;
             }
         }
-        
+
         $buenosAiresData = returnProvinceTable ($buenosAires, $enfermedad);
         $cabaData = returnProvinceTable($caba, $enfermedad);
         $chacoData = returnProvinceTable($chaco, $enfermedad);
@@ -51,9 +51,10 @@ class DBQueryController extends Controller
         $formosaData = returnProvinceTable($formosa, $enfermedad);
         $misionesData = returnProvinceTable ($misiones, $enfermedad);
         $saltaData = returnProvinceTable($salta, $enfermedad);
+        $santaFeData = returnProvinceTable($santaFe, $enfermedad);
         $santiagoDelEsteroData = returnProvinceTable ($santiagoDelEstero, $enfermedad);
         $tucumanData = returnProvinceTable($tucuman, $enfermedad);
-        
+
         $vacio = DB::table('events')
             ->where('disease', 'viruela') //Esto es para asegurarnos que el query original está vacío
             ->when($buenosAiresData, function ($query,$buenosAiresData) {
@@ -83,6 +84,9 @@ class DBQueryController extends Controller
             ->when($saltaData, function ($query,$saltaData) {
                 return $query->union($saltaData);
             })
+            ->when($santaFeData, function ($query,$santaFeData) {
+                return $query->union($santaFeData);
+            })
             ->when($santiagoDelEsteroData, function ($query,$santiagoDelEsteroData) {
                 return $query->union($santiagoDelEsteroData);
             })
@@ -90,10 +94,7 @@ class DBQueryController extends Controller
                 return $query->union($tucumanData);
             });
 
-        
-
         if ($enfermedad){
-            //echo "the request value for disease is " . $enfermedad;
             if (!$buenosAires 
                 && !$caba 
                 && !$chaco 
@@ -106,11 +107,12 @@ class DBQueryController extends Controller
                 && !$santaFe 
                 && !$santiagoDelEstero 
                 && !$tucuman) {
-                echo $enfermedad;
                 $events = DB::table('events')
-                    ->when($enfermedadReq != "Ambos", function ($query, $enfermedad) {
-                        echo $enfermedad;
-                        return $query->where('disease', $enfermedad);
+                    ->when($enfermedad == "Dengue", function ($query) {
+                        return $query->where('disease', 'Dengue');
+                    })
+                    ->when($enfermedad == "Enfermedad por Virus del Zika", function ($query) {
+                        return $query->where('disease', 'Enfermedad por Virus del Zika');
                     })
                     ->get();  
             } else {
@@ -130,8 +132,7 @@ class DBQueryController extends Controller
                 && !$tucuman) {
                 $events = DB::table('events')->get();
         }
-        
-        
+
         return view('baseDeDatos', ['events' => $events, 'quantityEvents'=> count($events)]);//->with("events", $events);
     }
 
