@@ -22,12 +22,14 @@ class DBQueryController extends Controller
         $santiagoDelEstero = $request->input('SantiagoDelEstero');
         $tucuman = $request->input('Tucuman');
         $enfermedad = $request->input('enfermedad');
+        $enfermedadReq = $request->input('enfermedad');
         
 
         function globalQueryWithoutUnion($province, $enfLocal) {
             return DB::table('events')
                 ->where('province_name', $province)
-                ->when($enfLocal != "Ambos", function ($query,$enfLocal) {
+                ->when($enfLocal != "Ambos", function ($query, $enfLocal) {
+                    echo "this ran" . $enfLocal;
                     return $query->where('disease', $enfLocal);
                 });
                 
@@ -39,7 +41,7 @@ class DBQueryController extends Controller
                 return $newQuery;
             }
         }
-
+        
         $buenosAiresData = returnProvinceTable ($buenosAires, $enfermedad);
         $cabaData = returnProvinceTable($caba, $enfermedad);
         $chacoData = returnProvinceTable($chaco, $enfermedad);
@@ -51,7 +53,7 @@ class DBQueryController extends Controller
         $saltaData = returnProvinceTable($salta, $enfermedad);
         $santiagoDelEsteroData = returnProvinceTable ($santiagoDelEstero, $enfermedad);
         $tucumanData = returnProvinceTable($tucuman, $enfermedad);
-
+        
         $vacio = DB::table('events')
             ->where('disease', 'viruela') //Esto es para asegurarnos que el query original está vacío
             ->when($buenosAiresData, function ($query,$buenosAiresData) {
@@ -91,6 +93,7 @@ class DBQueryController extends Controller
         
 
         if ($enfermedad){
+            //echo "the request value for disease is " . $enfermedad;
             if (!$buenosAires 
                 && !$caba 
                 && !$chaco 
@@ -103,8 +106,10 @@ class DBQueryController extends Controller
                 && !$santaFe 
                 && !$santiagoDelEstero 
                 && !$tucuman) {
+                echo $enfermedad;
                 $events = DB::table('events')
-                    ->when($enfermedad != "Ambos", function ($query,$enfermedad) {
+                    ->when($enfermedadReq != "Ambos", function ($query, $enfermedad) {
+                        echo $enfermedad;
                         return $query->where('disease', $enfermedad);
                     })
                     ->get();  
