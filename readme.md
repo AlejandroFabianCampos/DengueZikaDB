@@ -1,3 +1,15 @@
+Nota: este proyecto sigue en progreso, por lo tanto hay funciones faltantes (tal como una autentificación para la modificación de datos), al igual que la documentación sobre como replicar este proyecto también sigue incompleta.
+
+Este es un proyecto creado a partir de un dataset del [gobierno argentino](https://datos.gob.ar/dataset/salud-vigilancia-enfermedades-por-virus-dengue-zika), la idea fue que
+crear un proyecto full-stack adonde se pudiera interactuar con una base de datos de forma simple a través de una interfaz web. Para esto se eligió PHP como lenguaje de back-end,
+y Mysql como gestor de base de datos SQL. Luego se añadió el framework Laravel, y para manejar los ingresos de datos en formato excel se utilizó la librería Maatwebsite-excel.
+Actualmente hay un [demo hosteado de este proyecto](https://thawing-beach-19021.herokuapp.com/). El proyecto tuvo en cuenta el diseño responsive (mobile first).
+
+
+
+
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
